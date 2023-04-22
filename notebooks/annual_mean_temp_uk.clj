@@ -5,6 +5,7 @@
             [aerial.hanami.templates :as ht]))
 
 (comment
+  (require '[nextjournal.clerk :as clerk])
   (clerk/serve! {:watch-paths ["."] :browse? true}) 
 (clerk/show! "notebooks/annual_mean_temp_uk.clj")
   )
