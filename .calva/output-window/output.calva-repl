@@ -1,0 +1,312 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Starting Jack-in Terminal: pushd /Users/laurenocean/visualisation-project ; java -jar '/Users/laurenocean/.vscode/extensions/betterthantomorrow.calva-2.0.353/deps.clj.jar' -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.0.0"},cider/cider-nrepl {:mvn/version,"0.28.5"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]" ; popd
+; Using host:port localhost:54827 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉>  ; Use `alt+enter` to evaluate
+; Jack-in done.
+clj꞉user꞉> (require '[nextjournal.clerk :as clerk])
+nil
+; WARNING: update-vals already refers to: #'clojure.core/update-vals in namespace: clojure.tools.analyzer.utils, being replaced by: #'clojure.tools.analyzer.utils/update-vals
+; 
+; WARNING: update-keys already refers to: #'clojure.core/update-keys in namespace: clojure.tools.analyzer.utils, being replaced by: #'clojure.tools.analyzer.utils/update-keys
+; 
+; WARNING: update-vals already refers to: #'clojure.core/update-vals in namespace: clojure.tools.analyzer, being replaced by: #'clojure.tools.analyzer.utils/update-vals
+; 
+; WARNING: update-keys already refers to: #'clojure.core/update-keys in namespace: clojure.tools.analyzer, being replaced by: #'clojure.tools.analyzer.utils/update-keys
+; 
+; WARNING: update-vals already refers to: #'clojure.core/update-vals in namespace: clojure.tools.analyzer.passes, being replaced by: #'clojure.tools.analyzer.utils/update-vals
+; 
+; WARNING: update-vals already refers to: #'clojure.core/update-vals in namespace: clojure.tools.analyzer.passes.uniquify, being replaced by: #'clojure.tools.analyzer.utils/update-vals
+; 
+; WARNING: abs already refers to: #'clojure.core/abs in namespace: taoensso.encore, being replaced by: #'taoensso.encore/abs
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+(clerk/serve! {:watch-paths ["."] :browse? true})
+Clerk webserver started on 7777...
+Starting new watcher for paths ["."]
+{:watch-paths ["."], :browse? true}
+clj꞉user꞉> 
+(clerk/show! "notebooks/annual_mean_temp_uk.clj")
+Clerk evaluated 'notebooks/annual_mean_temp_uk.clj' in 1152.647681ms.
+nil
+clj꞉notebooks.annual-mean-temp-uk꞉> (clerk/vl {{:$schema "https://vega.github.io/schema/vega-lite/v5.json"
+                                                :data {:url "data/co2-concentration.csv"
+                                                       :format {:parse {:Date "utc:'%Y-%m-%d'"}}}
+                                                :width 800
+                                                :height 500
+                                                :transform [{:calculate "year(datum.Date)" :as "year"}
+                                                            {:calculate "floor(datum.year / 10)" :as "decade"}
+                                                            {:calculate "(datum.year % 10) + (month(datum.Date)/12)"
+                                                             :as "scaled_date"}
+                                                            {:calculate "datum.first_date === datum.scaled_date ? 'first' : datum.last_date === datum.scaled_date ? 'last' : null"
+                                                             :as "end"}]
+                                                :encoding {:x {:type "quantitative" :title "Year into Decade" :axis {:tickCount 11}}
+                                                           :y {:title "CO2 concentration in ppm" :type "quantitative" :scale {:zero false}}
+                                                           :color {:field "decade" :type "ordinal" :scale {:scheme "magma"} :legend nil}}
+                                                :layer [{:mark "line" :encoding {:x {:field "scaled_date"} :y {:field "CO2"}}}
+                                                        {:mark {:type "text" :baseline "top" :aria false}
+                                                         :encoding {:x {:aggregate "min" :field "scaled_date"}
+                                                                    :y {:aggregate {:argmin "scaled_date"} :field "CO2"}
+                                                                    :text {:aggregate {:argmin "scaled_date"} :field "year"}}}
+                                                        {:mark {:type "text" :aria false}
+                                                         :encoding {: x {:aggregate "max" :field "scaled_date"}
+                                                                    :y {:aggregate {:argmax "scaled_date"} :field "CO2"}
+                                                                    :text {:aggregate {:argmax "scaled_date"} :field "year"}}}]
+                                                :config {:text {:align "left" :dx 3 :dy 1}}}})
+; Syntax error reading source at (REPL:73:70).
+; Invalid token: :
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+(clerk/vl {:$schema "https://vega.github.io/schema/vega-lite/v5.json"
+           :data {:url "data/co2-concentration.csv"
+                  :format {:parse {:Date "utc:'%Y-%m-%d'"}}}
+           :width 800
+           :height 500
+           :transform [{:calculate "year(datum.Date)" :as "year"}
+                       {:calculate "floor(datum.year / 10)" :as "decade"}
+                       {:calculate "(datum.year % 10) + (month(datum.Date)/12)"
+                        :as "scaled_date"}
+                       {:calculate "datum.first_date === datum.scaled_date ? 'first' : datum.last_date === datum.scaled_date ? 'last' : null"
+                        :as "end"}]
+           :encoding {:x {:type "quantitative" :title "Year into Decade" :axis {:tickCount 11}}
+                      :y {:title "CO2 concentration in ppm" :type "quantitative" :scale {:zero false}}
+                      :color {:field "decade" :type "ordinal" :scale {:scheme "magma"} :legend nil}}
+           :layer [{:mark "line" :encoding {:x {:field "scaled_date"} :y {:field "CO2"}}}
+                   {:mark {:type "text" :baseline "top" :aria false}
+                    :encoding {:x {:aggregate "min" :field "scaled_date"}
+                               :y {:aggregate {:argmin "scaled_date"} :field "CO2"}
+                               :text {:aggregate {:argmin "scaled_date"} :field "year"}}}
+                   {:mark {:type "text" :aria false}
+                    :encoding {:x {:aggregate "max" :field "scaled_date"}
+                               :y {:aggregate {:argmax "scaled_date"} :field "CO2"}
+                               :text {:aggregate {:argmax "scaled_date"} :field "year"}}}]
+           :config {:text {:align "left" :dx 3 :dy 1}}})
+#:nextjournal{:value
+              {:$schema "https://vega.github.io/schema/vega-lite/v5.json",
+               :data {:url "data/co2-concentration.csv", :format {:parse {:Date "utc:'%Y-%m-%d'"}}},
+               :width 800,
+               :height 500,
+               :transform
+               [{:calculate "year(datum.Date)", :as "year"}
+                {:calculate "floor(datum.year / 10)", :as "decade"}
+                {:calculate "(datum.year % 10) + (month(datum.Date)/12)", :as "scaled_date"}
+                {:calculate
+                 "datum.first_date === datum.scaled_date ? 'first' : datum.last_date === datum.scaled_date ? 'last' : null",
+                 :as "end"}],
+               :encoding
+               {:x {:type "quantitative", :title "Year into Decade", :axis {:tickCount 11}},
+                :y {:title "CO2 concentration in ppm", :type "quantitative", :scale {:zero false}},
+                :color {:field "decade", :type "ordinal", :scale {:scheme "magma"}, :legend nil}},
+               :layer
+               [{:mark "line", :encoding {:x {:field "scaled_date"}, :y {:field "CO2"}}}
+                {:mark {:type "text", :baseline "top", :aria false},
+                 :encoding
+                 {:x {:aggregate "min", :field "scaled_date"},
+                  :y {:aggregate {:argmin "scaled_date"}, :field "CO2"},
+                  :text {:aggregate {:argmin "scaled_date"}, :field "year"}}}
+                {:mark {:type "text", :aria false},
+                 :encoding
+                 {:x {:aggregate "max", :field "scaled_date"},
+                  :y {:aggregate {:argmax "scaled_date"}, :field "CO2"},
+                  :text {:aggregate {:argmax "scaled_date"}, :field "year"}}}],
+               :config {:text {:align "left", :dx 3, :dy 1}}},
+              :viewer :vega-lite}
+clj꞉notebooks.annual-mean-temp-uk꞉> (Clerk/vl {:$schema "https://vega.github.io/schema/vega-lite/v5.json"
+                                               :data {:url "https://vega.github.io/vega-lite/data/co2-concentration.csv"
+                                                      :format {:parse {:Date "utc:'%Y-%m-%d'"}}}
+                                               :width 800
+                                               :height 500
+                                               :transform [{:calculate "year(datum.Date)" :as "year"}
+                                                           {:calculate "floor(datum.year / 10)" :as "decade"}
+                                                           {:calculate "(datum.year % 10) + (month(datum.Date)/12)"
+                                                            :as "scaled_date"}
+                                                           {:calculate "datum.first_date === datum.scaled_date ? 'first' : datum.last_date === datum.scaled_date ? 'last' : null"
+                                                            :as "end"}]
+                                               :encoding {:x {:type "quantitative" :title "Year into Decade" :axis {:tickCount 11}}
+                                                          :y {:title "CO2 concentration in ppm" :type "quantitative" :scale {:zero false}}
+                                                          :color {:field "decade" :type "ordinal" :scale {:scheme "magma"} :legend nil}}
+                                               :layer [{:mark "line" :encoding {:x {:field "scaled_date"} :y {:field "CO2"}}}
+                                                       {:mark {:type "text" :baseline "top" :aria false}
+                                                        :encoding {:x {:aggregate "min" :field "scaled_date"}
+                                                                   :y {:aggregate {:argmin "scaled_date"} :field "CO2"}
+                                                                   :text {:aggregate {:argmin "scaled_date"} :field "year"}}}
+                                                       {:mark {:type "text" :aria false}
+                                                        :encoding {:x {:aggregate "max" :field "scaled_date"}
+                                                                   :y {:aggregate {:argmax "scaled_date"} :field "CO2"}
+                                                                   :text {:aggregate {:argmax "scaled_date"} :field "year"}}}]
+                                               :config {:text {:align "left" :dx 3 :dy 1}}})
+; Syntax error compiling at (.calva/output-window/output.calva-repl:134:37).
+; No such namespace: Clerk
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+clojure.lang.Compiler/analyze (Compiler.java:6825)
+clojure.lang.Compiler$InvokeExpr/parse (Compiler.java:3832)
+clojure.lang.Compiler/analyzeSeq (Compiler.java:7126)
+clojure.lang.Compiler/analyze (Compiler.java:6806)
+clojure.lang.Compiler$BodyExpr$Parser/parse (Compiler.java:6137)
+clojure.lang.Compiler$FnMethod/parse (Compiler.java:5479)
+clojure.lang.Compiler$FnExpr/parse (Compiler.java:4041)
+clojure.lang.Compiler/analyzeSeq (Compiler.java:7122)
+clojure.lang.Compiler/analyze (Compiler.java:6806)
+clojure.lang.Compiler/eval (Compiler.java:7191)
+clojure.core/eval (core.clj:3215)
+clojure.core/eval (core.clj:3211)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.core/apply (core.clj:667)
+clojure.core/with-bindings* (core.clj:1990)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.main/repl (main.clj:437)
+clojure.main/repl (main.clj:458)
+clojure.main/repl (main.clj:368)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:84)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:56)
+nrepl.middleware.interruptible-eval/interruptible-eval (interruptible_eval.clj:152)
+nrepl.middleware.session/session-exec (session.clj:218)
+nrepl.middleware.session/session-exec (session.clj:217)
+java.lang.Thread/run (Thread.java:1589)
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Evaluating file: annual_mean_temp_uk.clj
+; Execution error (FileNotFoundException) at notebooks.annual-mean-temp-uk/eval21439$loading (annual_mean_temp_uk.clj:1).
+; Could not locate aerial/hanami/common__init.class, aerial/hanami/common.clj or aerial/hanami/common.cljc on classpath.
+; Evaluation of file annual_mean_temp_uk.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Evaluating file: annual_mean_temp_uk.clj
+; Execution error (FileNotFoundException) at notebooks.annual-mean-temp-uk/eval21460$loading (annual_mean_temp_uk.clj:1).
+; Could not locate aerial/hanami/common__init.class, aerial/hanami/common.clj or aerial/hanami/common.cljc on classpath.
+; Evaluation of file annual_mean_temp_uk.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+clj꞉user꞉> 
+clj꞉user꞉> 
+; Jacking in...
+; Connecting using "undefined" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Aborting jack-in. No project type selected.
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Starting Jack-in Terminal: pushd /Users/laurenocean/visualisation-project ; java -jar '/Users/laurenocean/.vscode/extensions/betterthantomorrow.calva-2.0.353/deps.clj.jar' -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.0.0"},cider/cider-nrepl {:mvn/version,"0.28.5"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]" ; popd
+; nREPL Connection was closed
+; Using host:port localhost:55286 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+:browse?
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Syntax error compiling at (notebooks/annual_mean_temp_uk.clj:0:0).
+; No such namespace: notebooks
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Syntax error compiling at (notebooks/annual_mean_temp_uk.clj:9:1).
+; No such namespace: clerk
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Syntax error compiling at (notebooks/annual_mean_temp_uk.clj:8:3).
+; No such namespace: clerk
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Syntax error compiling at (notebooks/annual_mean_temp_uk.clj:8:3).
+; No such namespace: clerk
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Syntax error compiling at (notebooks/annual_mean_temp_uk.clj:8:3).
+; No such namespace: clerk
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Syntax error compiling at (notebooks/annual_mean_temp_uk.clj:8:3).
+; No such namespace: clerk
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Jacking in...
+; Connecting using "undefined" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Aborting jack-in. No project type selected.
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Starting Jack-in Terminal: pushd /Users/laurenocean/visualisation-project ; java -jar '/Users/laurenocean/.vscode/extensions/betterthantomorrow.calva-2.0.353/deps.clj.jar' -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.0.0"},cider/cider-nrepl {:mvn/version,"0.28.5"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]" ; popd
+; nREPL Connection was closed
+; Using host:port localhost:55360 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Syntax error compiling at (notebooks/annual_mean_temp_uk.clj:8:3).
+; Unable to resolve symbol: require in this context
+clj꞉notebooks.annual-mean-temp-uk꞉> (require '[nextjournal.clerk :as clerk])
+; Syntax error compiling at (.calva/output-window/output.calva-repl:275:37).
+; Unable to resolve symbol: require in this context
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Starting Jack-in Terminal: pushd /Users/laurenocean/visualisation-project ; java -jar '/Users/laurenocean/.vscode/extensions/betterthantomorrow.calva-2.0.353/deps.clj.jar' -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.0.0"},cider/cider-nrepl {:mvn/version,"0.28.5"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]" ; popd
+; nREPL Connection was closed
+; Using host:port localhost:55392 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> (require '[nextjournal.clerk :as clerk])
+nil
+; WARNING: abs already refers to: #'clojure.core/abs in namespace: taoensso.encore, being replaced by: #'taoensso.encore/abs
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+nil
+nil
+clj꞉notebooks.annual-mean-temp-uk꞉> 
+clj꞉notebooks.annual-mean-temp-uk꞉> (clerk/serve! {:watch-paths ["."] :browse? true})
+Clerk webserver started on 7777...
+Starting new watcher for paths ["."]
+{:watch-paths ["."], :browse? true}
+clj꞉notebooks.annual-mean-temp-uk꞉> (clerk/show! "notebooks/annual_mean_temp_uk.clj")
+Clerk evaluated 'notebooks/annual_mean_temp_uk.clj' in 3769.914849ms.
+nil
+clj꞉notebooks.annual-mean-temp-uk꞉> 
